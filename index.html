@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cold Chain Monitor — 2–8 °C temperature logs</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❄</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>❄ Cold Chain Monitor</h1>
+      <p class="subtitle" data-i18n="header.subtitle">Temperature logs for refrigerated medicine deliveries (2–8 °C)</p>
+    </div>
+    <div class="topbar-actions">
+      <button id="reset-data" class="btn btn-ghost" type="button" data-i18n="header.reset">Reset sample data</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="cards" id="summary" data-i18n-aria="summary.label" aria-label="Summary"></section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 data-i18n="list.title">Shipments</h2>
+          <p class="hint" data-i18n="list.hint">Each line is one thermal box with a temperature logger inside. Click a shipment to see its readings.</p>
+        </div>
+        <select id="verdict-filter" data-i18n-aria="list.filter" aria-label="Filter by verdict">
+          <option value="all" data-i18n="list.all">All verdicts</option>
+          <option value="approved" data-i18n="verdict.approved">Approved</option>
+          <option value="review" data-i18n="verdict.review">Needs review</option>
+          <option value="quarantine" data-i18n="verdict.quarantine">Quarantine</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="list.id">Shipment</th>
+              <th data-i18n="list.route">Route</th>
+              <th data-i18n="list.box">Box</th>
+              <th data-i18n="list.departure">Departure</th>
+              <th data-i18n="list.duration">Duration</th>
+              <th data-i18n="list.range">Min / max</th>
+              <th data-i18n="list.excursions">Exc.</th>
+              <th data-i18n="list.verdict">Verdict</th>
+            </tr>
+          </thead>
+          <tbody id="shipment-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="detail" aria-live="polite"></section>
+
+    <section class="panel">
+      <h2 data-i18n="import.title">Import a logger file</h2>
+      <p class="hint" data-i18n="import.hint">One reading per line: date and time, then the temperature.</p>
+
+      <form id="import-form" class="import-form">
+        <label><span data-i18n="import.id">Shipment ID</span> <input name="id" required placeholder="RT-201"></label>
+        <label><span data-i18n="import.route">Route</span> <input name="route" placeholder="Sumaré"></label>
+        <label><span data-i18n="import.box">Box</span> <input name="box" placeholder="TB-01"></label>
+        <!-- The native file button shows its text in the browser's language, not
+             the app's, so the real input is hidden and a translated one is shown. -->
+        <div class="file-field">
+          <span class="file-label" data-i18n="import.file">CSV file</span>
+          <label class="file-pick">
+            <input name="file" type="file" accept=".csv,.txt,text/csv" class="visually-hidden">
+            <span class="btn btn-secondary btn-sm" data-i18n="import.choose">Choose file</span>
+            <span id="file-name" class="file-name">No file chosen</span>
+          </label>
+        </div>
+        <label class="wide">
+          <span data-i18n="import.paste">Or paste the readings</span>
+          <textarea name="csv" rows="6" spellcheck="false" placeholder="2026-03-10 08:00;4,5&#10;2026-03-10 08:05;4,8"></textarea>
+        </label>
+        <div class="form-actions wide">
+          <button class="btn btn-secondary" type="button" id="fill-example" data-i18n="import.example">Fill with an example</button>
+          <button class="btn" type="submit" data-i18n="import.submit">Import shipment</button>
+        </div>
+      </form>
+      <div id="import-message" class="form-message" role="status"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span data-i18n="footer.text">Fictional data, built for study. Made by</span> <a href="https://github.com/CelsoJr011">Celso Junior</a>.
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
