@@ -102,7 +102,7 @@ export function buildSampleShipments() {
       route: 'Paulínia — drugstores',
       box: 'TB-09',
       sample: true,
-      // Temperature looked fine, but the logger stopped recording for 45 min.
+      // Temperature looked fine, but the logger stopped recording for 50 min.
       readings: buildReadings({ start: yesterdayAt(8, 10), count: 58, offset: 5, skip: [[20, 28]] }),
     },
   ];
